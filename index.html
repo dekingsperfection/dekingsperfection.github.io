@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DKPS Result Portal</title>
+    <style>
+      :root {
+        --bg: #fff7f9;
+        --card: #ffffff;
+        --card-2: #ffffff;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --line: #e5e7eb;
+        --brand: #7a1f2b;
+        --brand-2: #a52839;
+        --shadow: 0 14px 32px rgba(17, 24, 39, 0.08);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Inter, Arial, Helvetica, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+      }
+      .wrap {
+        width: min(1100px, calc(100% - 24px));
+        margin: 30px auto 60px;
+      }
+      .hero {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: 92px 1fr;
+        align-items: center;
+        background: linear-gradient(180deg, #fffdfb, #fff7f0);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 22px;
+        box-shadow: var(--shadow);
+      }
+      .logo {
+        width: 92px;
+        height: 92px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        border: 1px solid rgba(122, 31, 43, 0.15);
+      }
+      .logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .school h1 {
+        margin: 0 0 6px;
+        font-size: clamp(1.3rem, 2vw, 2rem);
+      }
+      .school p {
+        margin: 3px 0;
+        color: var(--muted);
+      }
+      .pillrow {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+      .pill {
+        border: 1px solid rgba(122, 31, 43, 0.1);
+        background: #fffaf5;
+        color: var(--muted);
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 0.92rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 370px 1fr;
+        gap: 22px;
+        margin-top: 22px;
+      }
+      @media (max-width: 860px) {
+        .hero {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        .logo {
+          margin: auto;
+        }
+        .pillrow {
+          justify-content: center;
+        }
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+      }
+      .panel,
+      .result-shell {
+        padding: 22px;
+      }
+      .panel h2 {
+        margin: 0 0 8px;
+        font-size: 1.2rem;
+      }
+      .panel p.sub {
+        margin: 0 0 18px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      .field {
+        margin: 14px 0;
+      }
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+        color: #374151;
+        font-weight: 600;
+      }
+      input {
+        width: 100%;
+        padding: 14px 15px;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: #ffffff;
+        color: var(--text);
+        outline: none;
+        font-size: 1rem;
+      }
+      input:focus {
+        border-color: var(--brand-2);
+        box-shadow: 0 0 0 4px rgba(165, 40, 57, 0.15);
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 18px;
+      }
+      button {
+        appearance: none;
+        border: none;
+        cursor: pointer;
+        border-radius: 14px;
+        padding: 13px 16px;
+        font-size: 0.98rem;
+        font-weight: 700;
+      }
+      button.primary {
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        color: white;
+        flex: 1;
+      }
+      button.secondary {
+        background: #ffffff;
+        border: 1px solid var(--line);
+        color: var(--text);
+      }
+      .help {
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.6;
+      }
+      .status {
+        margin-top: 14px;
+        min-height: 22px;
+        font-weight: 600;
+      }
+      .status.error {
+        color: #fca5a5;
+      }
+      .status.ok {
+        color: #86efac;
+      }
+      .hidden {
+        display: none !important;
+      }
+      .result-top {
+        display: flex;
+        gap: 14px;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding-bottom: 18px;
+        border-bottom: 1px solid var(--line);
+      }
+      .result-top h3 {
+        margin: 0 0 6px;
+        font-size: 1.45rem;
+      }
+      .result-top p {
+        margin: 3px 0;
+        color: var(--muted);
+      }
+      .print-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .mini {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(4, minmax(120px, 1fr));
+        margin: 18px 0;
+      }
+      @media (max-width: 700px) {
+        .mini {
+          grid-template-columns: repeat(2, minmax(120px, 1fr));
+        }
+      }
+      .stat {
+        background: var(--card-2);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 14px;
+      }
+      .stat .k {
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+      .stat .v {
+        margin-top: 8px;
+        font-size: 1.15rem;
+        font-weight: 800;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        border-radius: 18px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+      }
+      th,
+      td {
+        padding: 13px 14px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        font-size: 0.96rem;
+      }
+      th {
+        background: #f8fafc;
+        color: var(--brand);
+        font-size: 0.93rem;
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      td.score {
+        font-weight: 700;
+      }
+      .split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 18px;
+      }
+      @media (max-width: 700px) {
+        .split {
+          grid-template-columns: 1fr;
+        }
+      }
+      .note {
+        background: var(--card-2);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 16px;
+      }
+      .note h4 {
+        margin: 0 0 10px;
+      }
+      .note p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .foot {
+        color: var(--muted);
+        text-align: center;
+        margin-top: 18px;
+        font-size: 0.9rem;
+      }
+      .loading {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--muted);
+      }
+      .spinner {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: 2px solid rgba(122, 31, 43, 0.18);
+        border-top-color: var(--brand);
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @media print {
+        body {
+          background: #fff;
+          color: #111827;
+        }
+        .wrap {
+          width: 100%;
+          margin: 0;
+        }
+        .hero,
+        .search-card {
+          display: none !important;
+        }
+        .card {
+          border: none;
+          box-shadow: none;
+          background: #fff;
+        }
+        .result-shell {
+          padding: 0;
+        }
+        .result-top p,
+        .foot,
+        .note p,
+        .stat .k {
+          color: #374151 !important;
+        }
+        table {
+          background: #fff;
+          border: 1px solid #d1d5db;
+        }
+        th,
+        td {
+          border-bottom: 1px solid #e5e7eb;
+          color: #111827;
+        }
+        .print-actions {
+          display: none !important;
+        }
+      }
+
+      .stamp-box {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .stamp-box img {
+        width: 180px;
+        opacity: 0.7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <section class="hero">
+        <div class="logo" id="logoBox">
+          <img src="kps-logo.webp" alt="School Logo" />
+        </div>
+        <div class="school">
+          <h1 id="schoolName">DE KINGS PERFECTION PRIVATE SCHOOL</h1>
+          <p id="schoolMotto">Academic and moral excellence</p>
+          <p>13, Abosule Street, Agbado Crossing, Ogun State</p>
+          <div class="pillrow">
+            <div class="pill" id="sessionPill">Session: 2025/2026</div>
+            <div class="pill" id="termPill">Term: Second Term</div>
+            <div class="pill">Access: Login ID + PIN</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="card search-card">
+          <div class="panel">
+            <h2>Check Result</h2>
+            <p class="sub">
+              Enter the student Login ID and PIN given by the school.
+            </p>
+
+            <div class="field">
+              <label for="studentId">Login ID</label>
+              <input
+                id="studentId"
+                placeholder="e.g. Enter Your Login ID"
+                autocomplete="username" />
+            </div>
+
+            <div class="field">
+              <label for="pin">PIN</label>
+              <input
+                id="pin"
+                type="password"
+                placeholder="Enter PIN"
+                autocomplete="current-password" />
+            </div>
+
+            <div class="actions">
+              <button class="primary" id="checkBtn">Check Result</button>
+              <button class="secondary" id="clearBtn" type="button">
+                Clear
+              </button>
+            </div>
+
+            <div class="status" id="status"></div>
+
+            <div class="help">
+              Use the exact Login ID and PIN issued by the school.
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="result-shell">
+            <div id="emptyState">
+              <h2 style="margin-top: 0">Result Preview</h2>
+              <p class="sub">
+                No result loaded yet. Once the correct Login ID and PIN are
+                entered, the full result sheet appears here.
+              </p>
+            </div>
+
+            <div id="loadingState" class="hidden">
+              <div class="loading">
+                <span class="spinner"></span> Loading result...
+              </div>
+            </div>
+
+            <div id="resultState" class="hidden">
+              <div class="result-top">
+                <div>
+                  <h3 id="studentName">Student Name</h3>
+                  <p id="studentMeta">Class • Term • Session</p>
+                  <p id="studentExtra">Login ID: -</p>
+                </div>
+                <div class="print-actions">
+                  <button class="secondary" id="printBtn" type="button">
+                    Print / Save PDF
+                  </button>
+                  <button class="secondary" id="newSearchBtn" type="button">
+                    New Search
+                  </button>
+                </div>
+              </div>
+
+              <div class="mini">
+                <div class="stat">
+                  <div class="k">Total</div>
+                  <div class="v" id="totalStat">-</div>
+                </div>
+                <div class="stat">
+                  <div class="k">Average</div>
+                  <div class="v" id="avgStat">-</div>
+                </div>
+                <div class="stat">
+                  <div class="k">Grade</div>
+                  <div class="v" id="gradeStat">-</div>
+                </div>
+                <div class="stat">
+                  <div class="k">Subjects</div>
+                  <div class="v" id="subjectCountStat">-</div>
+                </div>
+              </div>
+
+              <h4 style="margin: 0 0 12px">Subject Scores</h4>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Subject</th>
+                    <th style="width: 120px">CA</th>
+                    <th style="width: 120px">Exam</th>
+                    <th style="width: 120px">Total</th>
+                  </tr>
+                </thead>
+                <tbody id="subjectsBody"></tbody>
+              </table>
+
+              <div class="split">
+                <div class="note">
+                  <h4>Teacher / School Remark</h4>
+                  <p id="remarkBox">-</p>
+                </div>
+                <div class="note">
+                  <h4>Summary</h4>
+                  <p id="infoBox">-</p>
+                </div>
+              </div>
+
+              <div class="stamp-box">
+                <img src="stamp.webp" alt="School Stamp" />
+              </div>
+
+              <div class="foot" id="portalFooter">
+                Generated from the school result portal.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      const CONFIG = {
+        schoolName: "DE KINGS PERFECTION PRIVATE SCHOOL",
+        schoolMotto: "Academic and moral excellence",
+        sessionLabel: "2025/2026",
+        termLabel: "Second Term",
+        logoUrl: "kps-logo.png",
+        dataUrl:
+          "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoLJx-x37Wx52QunGj4oyTJwA_5shf9rEbEzo2sU7kkRBHrfZD6sHhIjjWBhGVrcJlAV_k_kRrwp1X/pub?gid=1639608875&single=true&output=tsv",
+        idField: "login_id",
+        pinField: "pin",
+        schoolFooter: "Generated from the school result portal.",
+      };
+
+      const $ = (id) => document.getElementById(id);
+      const state = { rows: null };
+
+      function initBrand() {
+        $("schoolName").textContent = CONFIG.schoolName;
+        $("schoolMotto").textContent = CONFIG.schoolMotto;
+        $("sessionPill").textContent = `Session: ${CONFIG.sessionLabel}`;
+        $("termPill").textContent = `Term: ${CONFIG.termLabel}`;
+        $("portalFooter").textContent = CONFIG.schoolFooter;
+        if (CONFIG.logoUrl) {
+          $("logoBox").innerHTML =
+            `<img src="${CONFIG.logoUrl}" alt="School Logo">`;
+        }
+      }
+
+      function setStatus(msg = "", type = "") {
+        const box = $("status");
+        box.textContent = msg;
+        box.className = "status" + (type ? " " + type : "");
+      }
+
+      function showState(which) {
+        $("emptyState").classList.add("hidden");
+        $("loadingState").classList.add("hidden");
+        $("resultState").classList.add("hidden");
+        $(which).classList.remove("hidden");
+      }
+
+      function clean(x) {
+        return String(x || "")
+          .replace(/^"+|"+$/g, "")
+          .replace(/\r/g, "")
+          .replace(/\n/g, "")
+          .trim();
+      }
+
+      function firstNameOnly(fullName) {
+        const parts = clean(fullName).split(/\s+/).filter(Boolean);
+        return parts.length ? parts[parts.length - 1] : clean(fullName);
+      }
+
+      function parseTSVLine(line) {
+        const out = [];
+        let current = "";
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+          const ch = line[i];
+          const next = line[i + 1];
+          if (ch === '"') {
+            if (inQuotes && next === '"') {
+              current += '"';
+              i++;
+            } else {
+              inQuotes = !inQuotes;
+            }
+          } else if (ch === "\t" && !inQuotes) {
+            out.push(current);
+            current = "";
+          } else {
+            current += ch;
+          }
+        }
+        out.push(current);
+        return out;
+      }
+
+      async function getRows() {
+        if (state.rows) return state.rows;
+        const res = await fetch(CONFIG.dataUrl, { cache: "no-store" });
+        if (!res.ok) throw new Error("Could not load result data.");
+        const text = await res.text();
+
+        const rows = text
+          .split(/\r?\n/)
+          .filter((r) => r.trim() !== "")
+          .map(parseTSVLine);
+        const headers = rows[0].map((h) => clean(h));
+
+        state.rows = rows.slice(1).map((r) => {
+          const obj = {};
+          headers.forEach((h, i) => (obj[h] = r[i] || ""));
+          return obj;
+        });
+
+        return state.rows;
+      }
+
+      function subjectsFromDisplay(subjectsDisplay) {
+        const text = String(subjectsDisplay || "");
+        const matches = [
+          ...text.matchAll(
+            /([^,]+?)\s*\(CA:([^,]*),\s*Exam:([^,]*),\s*Total:([^)]+)\)/g,
+          ),
+        ];
+        return matches.map((m) => ({
+          subject: clean(m[1]),
+          ca: clean(m[2]) || "-",
+          exam: clean(m[3]) || "-",
+          total: clean(m[4]) || "-",
+        }));
+      }
+
+      function subjectsFromJson(subjectsJson) {
+        try {
+          let raw = String(subjectsJson || "").trim();
+          if (!raw) return [];
+          if (raw.startsWith('"') && raw.endsWith('"')) raw = raw.slice(1, -1);
+          raw = raw.replace(/""/g, '"');
+          const arr = JSON.parse(raw);
+          if (!Array.isArray(arr)) return [];
+          return arr.map((s) => ({
+            subject: clean(s.subject),
+            ca: clean(s.ca) || "-",
+            exam: clean(s.exam) || "-",
+            total: clean(s.total) || "-",
+          }));
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function fillStudent(student) {
+        let subjects = subjectsFromDisplay(student.subjects_display);
+        if (!subjects.length)
+          subjects = subjectsFromJson(student.subjects_json);
+
+        $("studentName").textContent = clean(student.name);
+        $("studentMeta").textContent =
+          `${clean(student.class)} • ${clean(student.term) || CONFIG.termLabel} • ${clean(student.session) || CONFIG.sessionLabel}`;
+        $("studentExtra").textContent =
+          `Login ID: ${clean(student[CONFIG.idField]) || "-"}`;
+
+        $("totalStat").textContent = clean(student.total) || "-";
+        $("avgStat").textContent = clean(student.average) || "-";
+        $("gradeStat").textContent = clean(student.grade) || "-";
+        $("subjectCountStat").textContent = String(subjects.length || 0);
+
+        const tbody = $("subjectsBody");
+        tbody.innerHTML = "";
+
+        if (!subjects.length) {
+          tbody.innerHTML = `<tr><td colspan="4">No subject result found.</td></tr>`;
+        } else {
+          subjects.forEach((item) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td>${item.subject}</td><td class="score">${item.ca}</td><td class="score">${item.exam}</td><td class="score">${item.total}</td>`;
+            tbody.appendChild(tr);
+          });
+        }
+
+        const grade = clean(student.grade).toUpperCase();
+        const remarkMap = {
+          A: "Excellent performance.",
+          B: "Very good.",
+          C: "Good effort.",
+          D: "Fair.",
+          E: "Needs improvement.",
+          F: "Poor performance.",
+        };
+
+        $("remarkBox").textContent =
+          clean(student.remark) || remarkMap[grade] || "-";
+        $("infoBox").textContent =
+          `Class: ${clean(student.class) || "-"} | Term: ${clean(student.term) || CONFIG.termLabel} | Session: ${clean(student.session) || CONFIG.sessionLabel}`;
+
+        showState("resultState");
+      }
+
+      function findStudent(rows, id, pin) {
+        const idNorm = clean(id).toLowerCase();
+        const pinNorm = clean(pin);
+        return rows.find((row) => {
+          const rowId = clean(row[CONFIG.idField]).toLowerCase();
+          const rowPin = clean(row[CONFIG.pinField]);
+          return rowId === idNorm && rowPin === pinNorm;
+        });
+      }
+
+      async function checkResult() {
+        const id = $("studentId").value;
+        const pin = $("pin").value;
+
+        if (!clean(id) || !clean(pin)) {
+          setStatus("Enter both Login ID and PIN.", "error");
+          return;
+        }
+
+        setStatus("");
+        showState("loadingState");
+
+        try {
+          const rows = await getRows();
+          const student = findStudent(rows, id, pin);
+          if (!student) {
+            showState("emptyState");
+            setStatus("Invalid Login ID or PIN.", "error");
+            return;
+          }
+          fillStudent(student);
+          setStatus("Result loaded successfully.", "ok");
+        } catch (err) {
+          showState("emptyState");
+          setStatus(err.message || "An error occurred.", "error");
+        }
+      }
+
+      function clearForm() {
+        $("studentId").value = "";
+        $("pin").value = "";
+        setStatus("");
+        showState("emptyState");
+      }
+
+      $("checkBtn").addEventListener("click", checkResult);
+      $("clearBtn").addEventListener("click", clearForm);
+      $("newSearchBtn").addEventListener("click", clearForm);
+      $("printBtn").addEventListener("click", () => window.print());
+      $("pin").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") checkResult();
+      });
+      $("studentId").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") checkResult();
+      });
+
+      initBrand();
+      showState("emptyState");
+    </script>
+  </body>
+</html>
