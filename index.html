@@ -601,24 +601,30 @@
       }
 
       /* STAMP */
-      .stamp-box {
+      .stamp-row {
         display: flex;
-        justify-content: flex-end;
-        padding-top: 16px;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 18px;
         border-top: 1px dashed var(--line);
+        margin-bottom: 16px;
       }
-      .stamp-box img {
-        width: 130px;
-        opacity: 0.6;
+      .stamp-row img {
+        width: 120px;
+        opacity: 0.55;
+      }
+      .stamp-row .official-text {
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 0.9rem;
+        color: var(--muted);
       }
 
       .foot {
         text-align: center;
-        margin-top: 18px;
         color: var(--muted);
-        font-size: 0.8rem;
-        border-top: 1px solid var(--line);
-        padding-top: 14px;
+        font-size: 0.76rem;
+        letter-spacing: 0.03em;
       }
 
       .hidden {
@@ -858,7 +864,11 @@
                 </div>
               </div>
 
-              <div class="stamp-box">
+              <div class="stamp-row">
+                <p class="official-text">
+                  This result is officially issued by De Kings Perfection
+                  Private School.
+                </p>
                 <img src="stamp.webp" alt="School Stamp" />
               </div>
 
