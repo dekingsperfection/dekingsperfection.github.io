@@ -4,453 +4,811 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DKPS Result Portal</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+3:wght@400;500;600;700&display=swap"
+      rel="stylesheet" />
     <style>
       :root {
-        --bg: #fff7f9;
+        --bg: #f0f2f5;
         --card: #ffffff;
-        --card-2: #ffffff;
-        --text: #1f2937;
-        --muted: #6b7280;
-        --line: #e5e7eb;
+        --text: #1a1a2e;
+        --muted: #64748b;
+        --line: #e2e8f0;
         --brand: #7a1f2b;
-        --brand-2: #a52839;
-        --shadow: 0 14px 32px rgba(17, 24, 39, 0.08);
+        --brand-dark: #5c1620;
+        --brand-2: #9b2335;
+        --brand-light: #fdf4f5;
+        --brand-border: #f0c8cc;
+        --charcoal: #2d3748;
+        --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.06);
+        --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.12);
+        --radius: 16px;
       }
-      * {
+
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
-      }
-      body {
         margin: 0;
-        font-family: Inter, Arial, Helvetica, sans-serif;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Source Sans 3", sans-serif;
         background: var(--bg);
         color: var(--text);
         min-height: 100vh;
       }
+
+      /* TOP BAR */
+      .topbar {
+        background: var(--brand-dark);
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-align: center;
+        padding: 8px 16px;
+        letter-spacing: 0.04em;
+      }
+
       .wrap {
-        width: min(1100px, calc(100% - 24px));
-        margin: 30px auto 60px;
+        width: min(1120px, calc(100% - 32px));
+        margin: 28px auto 72px;
       }
+
+      /* HERO */
       .hero {
-        display: grid;
-        gap: 18px;
-        grid-template-columns: 92px 1fr;
-        align-items: center;
-        background: linear-gradient(180deg, #fffdfb, #fff7f0);
+        background: var(--card);
         border: 1px solid var(--line);
-        border-radius: 24px;
-        padding: 22px;
+        border-radius: var(--radius);
         box-shadow: var(--shadow);
+        overflow: hidden;
       }
+
+      .hero-top {
+        background: linear-gradient(
+          135deg,
+          var(--brand-dark) 0%,
+          var(--brand) 50%,
+          var(--brand-2) 100%
+        );
+        padding: 28px 32px;
+        display: grid;
+        grid-template-columns: 96px 1fr;
+        gap: 24px;
+        align-items: center;
+      }
+
       .logo {
-        width: 92px;
-        height: 92px;
-        border-radius: 20px;
-        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        width: 96px;
+        height: 96px;
+        border-radius: 14px;
+        background: white;
         display: grid;
         place-items: center;
         overflow: hidden;
-        border: 1px solid rgba(122, 31, 43, 0.15);
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        flex-shrink: 0;
       }
       .logo img {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
-      .school h1 {
-        margin: 0 0 6px;
-        font-size: clamp(1.3rem, 2vw, 2rem);
+
+      .school-text h1 {
+        font-family: "Merriweather", serif;
+        font-size: clamp(1.1rem, 2vw, 1.65rem);
+        font-weight: 900;
+        color: white;
+        line-height: 1.25;
+        margin-bottom: 5px;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
       }
-      .school p {
-        margin: 3px 0;
-        color: var(--muted);
+      .school-text .motto {
+        color: rgba(255, 255, 255, 0.8);
+        font-style: italic;
+        font-size: 0.9rem;
+        margin-bottom: 3px;
       }
+      .school-text .address {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.83rem;
+      }
+
+      .hero-bottom {
+        padding: 14px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+        background: white;
+        border-top: 3px solid var(--brand);
+      }
+
       .pillrow {
         display: flex;
-        gap: 10px;
+        gap: 8px;
         flex-wrap: wrap;
-        margin-top: 10px;
       }
       .pill {
-        border: 1px solid rgba(122, 31, 43, 0.1);
-        background: #fffaf5;
-        color: var(--muted);
-        padding: 8px 12px;
-        border-radius: 999px;
-        font-size: 0.92rem;
+        background: var(--brand-light);
+        border: 1px solid var(--brand-border);
+        color: var(--brand);
+        padding: 5px 14px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
       }
+      .pill.dark-pill {
+        background: var(--charcoal);
+        border-color: var(--charcoal);
+        color: white;
+      }
+
+      .portal-label {
+        font-size: 0.8rem;
+        color: var(--muted);
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      /* GRID */
       .grid {
         display: grid;
-        grid-template-columns: 370px 1fr;
+        grid-template-columns: 340px 1fr;
         gap: 22px;
         margin-top: 22px;
+        align-items: start;
       }
-      @media (max-width: 860px) {
-        .hero {
-          grid-template-columns: 1fr;
-          text-align: center;
-        }
-        .logo {
-          margin: auto;
-        }
-        .pillrow {
-          justify-content: center;
-        }
-        .grid {
-          grid-template-columns: 1fr;
-        }
-      }
+
+      /* CARD */
       .card {
         background: var(--card);
         border: 1px solid var(--line);
-        border-radius: 24px;
+        border-radius: var(--radius);
         box-shadow: var(--shadow);
-      }
-      .panel,
-      .result-shell {
-        padding: 22px;
-      }
-      .panel h2 {
-        margin: 0 0 8px;
-        font-size: 1.2rem;
-      }
-      .panel p.sub {
-        margin: 0 0 18px;
-        color: var(--muted);
-        line-height: 1.5;
-      }
-      .field {
-        margin: 14px 0;
-      }
-      label {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 0.95rem;
-        color: #374151;
-        font-weight: 600;
-      }
-      input {
-        width: 100%;
-        padding: 14px 15px;
-        border-radius: 14px;
-        border: 1px solid var(--line);
-        background: #ffffff;
-        color: var(--text);
-        outline: none;
-        font-size: 1rem;
-      }
-      input:focus {
-        border-color: var(--brand-2);
-        box-shadow: 0 0 0 4px rgba(165, 40, 57, 0.15);
-      }
-      .actions {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        margin-top: 18px;
-      }
-      button {
-        appearance: none;
-        border: none;
-        cursor: pointer;
-        border-radius: 14px;
-        padding: 13px 16px;
-        font-size: 0.98rem;
-        font-weight: 700;
-      }
-      button.primary {
-        background: linear-gradient(135deg, var(--brand), var(--brand-2));
-        color: white;
-        flex: 1;
-      }
-      button.secondary {
-        background: #ffffff;
-        border: 1px solid var(--line);
-        color: var(--text);
-      }
-      .help {
-        margin-top: 14px;
-        color: var(--muted);
-        font-size: 0.92rem;
-        line-height: 1.6;
-      }
-      .status {
-        margin-top: 14px;
-        min-height: 22px;
-        font-weight: 600;
-      }
-      .status.error {
-        color: #fca5a5;
-      }
-      .status.ok {
-        color: #86efac;
-      }
-      .hidden {
-        display: none !important;
-      }
-      .result-top {
-        display: flex;
-        gap: 14px;
-        justify-content: space-between;
-        align-items: flex-start;
-        flex-wrap: wrap;
-        padding-bottom: 18px;
-        border-bottom: 1px solid var(--line);
-      }
-      .result-top h3 {
-        margin: 0 0 6px;
-        font-size: 1.45rem;
-      }
-      .result-top p {
-        margin: 3px 0;
-        color: var(--muted);
-      }
-      .print-actions {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-      .mini {
-        display: grid;
-        gap: 12px;
-        grid-template-columns: repeat(4, minmax(120px, 1fr));
-        margin: 18px 0;
-      }
-      @media (max-width: 700px) {
-        .mini {
-          grid-template-columns: repeat(2, minmax(120px, 1fr));
-        }
-      }
-      .stat {
-        background: var(--card-2);
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        padding: 14px;
-      }
-      .stat .k {
-        color: var(--muted);
-        font-size: 0.88rem;
-      }
-      .stat .v {
-        margin-top: 8px;
-        font-size: 1.15rem;
-        font-weight: 800;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
         overflow: hidden;
-        border-radius: 18px;
-        background: #ffffff;
-        border: 1px solid var(--line);
       }
-      th,
-      td {
-        padding: 13px 14px;
+
+      /* SEARCH PANEL */
+      .card-header {
+        padding: 18px 24px 0;
         border-bottom: 1px solid var(--line);
-        text-align: left;
-        font-size: 0.96rem;
+        padding-bottom: 16px;
       }
-      th {
-        background: #f8fafc;
-        color: var(--brand);
-        font-size: 0.93rem;
-      }
-      tr:last-child td {
-        border-bottom: none;
-      }
-      td.score {
+      .card-header h2 {
+        font-family: "Merriweather", serif;
+        font-size: 1.05rem;
         font-weight: 700;
-      }
-      .split {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-        margin-top: 18px;
-      }
-      @media (max-width: 700px) {
-        .split {
-          grid-template-columns: 1fr;
-        }
-      }
-      .note {
-        background: var(--card-2);
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        padding: 16px;
-      }
-      .note h4 {
-        margin: 0 0 10px;
-      }
-      .note p {
-        margin: 0;
-        color: var(--muted);
-        line-height: 1.6;
-      }
-      .foot {
-        color: var(--muted);
-        text-align: center;
-        margin-top: 18px;
-        font-size: 0.9rem;
-      }
-      .loading {
+        color: var(--charcoal);
         display: flex;
         align-items: center;
         gap: 10px;
+      }
+      .card-header h2::before {
+        content: "";
+        width: 4px;
+        height: 18px;
+        background: var(--brand);
+        border-radius: 2px;
+        display: inline-block;
+      }
+      .card-header p {
+        margin-top: 5px;
         color: var(--muted);
+        font-size: 0.875rem;
+        line-height: 1.5;
+        padding-left: 14px;
+      }
+
+      .panel {
+        padding: 20px 24px 24px;
+      }
+
+      .field {
+        margin-bottom: 16px;
+      }
+      .field label {
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--charcoal);
+        margin-bottom: 7px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .field input {
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 10px;
+        border: 1.5px solid var(--line);
+        background: #f8fafc;
+        color: var(--text);
+        font-family: "Source Sans 3", sans-serif;
+        font-size: 0.97rem;
+        font-weight: 500;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s,
+          background 0.2s;
+      }
+      .field input:focus {
+        border-color: var(--brand);
+        background: white;
+        box-shadow: 0 0 0 3px rgba(122, 31, 43, 0.1);
+      }
+      .field input::placeholder {
+        color: #bfcad4;
+      }
+
+      .actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .btn-primary {
+        flex: 1;
+        padding: 13px 20px;
+        background: var(--brand);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-family: "Source Sans 3", sans-serif;
+        font-size: 0.96rem;
+        font-weight: 700;
+        cursor: pointer;
+        letter-spacing: 0.02em;
+        transition:
+          background 0.15s,
+          transform 0.1s,
+          box-shadow 0.15s;
+        box-shadow: 0 2px 12px rgba(122, 31, 43, 0.3);
+      }
+      .btn-primary:hover {
+        background: var(--brand-dark);
+        box-shadow: 0 4px 20px rgba(122, 31, 43, 0.35);
+      }
+      .btn-primary:active {
+        transform: scale(0.99);
+      }
+
+      .btn-secondary {
+        padding: 13px 18px;
+        background: white;
+        border: 1.5px solid var(--line);
+        border-radius: 10px;
+        font-family: "Source Sans 3", sans-serif;
+        font-size: 0.93rem;
+        font-weight: 600;
+        color: var(--muted);
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          color 0.15s;
+      }
+      .btn-secondary:hover {
+        border-color: var(--brand-border);
+        color: var(--brand);
+      }
+
+      .status {
+        margin-top: 12px;
+        font-size: 0.86rem;
+        font-weight: 700;
+        min-height: 18px;
+      }
+      .status.error {
+        color: var(--brand-2);
+      }
+      .status.ok {
+        color: #16a34a;
+      }
+
+      .help {
+        margin-top: 14px;
+        padding: 13px 15px;
+        background: #f8fafc;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--brand-border);
+        color: var(--muted);
+        font-size: 0.83rem;
+        line-height: 1.6;
+      }
+
+      /* RESULT PANEL */
+      .result-shell {
+        padding: 24px;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 52px 24px;
+      }
+      .empty-icon {
+        width: 68px;
+        height: 68px;
+        background: var(--brand-light);
+        border: 2px solid var(--brand-border);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 18px;
+        font-size: 1.8rem;
+      }
+      .empty-state h2 {
+        font-family: "Merriweather", serif;
+        font-size: 1.1rem;
+        color: var(--charcoal);
+        margin-bottom: 10px;
+      }
+      .empty-state p {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.6;
+        max-width: 360px;
+        margin: 0 auto;
+      }
+
+      .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 64px 24px;
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 0.9rem;
       }
       .spinner {
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
         border-radius: 50%;
-        border: 2px solid rgba(122, 31, 43, 0.18);
+        border: 2.5px solid rgba(122, 31, 43, 0.15);
         border-top-color: var(--brand);
-        animation: spin 0.8s linear infinite;
+        animation: spin 0.7s linear infinite;
       }
       @keyframes spin {
         to {
           transform: rotate(360deg);
         }
       }
+
+      /* RESULT HEADER */
+      .result-header-bar {
+        background: var(--charcoal);
+        border-radius: 12px;
+        padding: 18px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+      .result-header-bar::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 5px;
+        background: var(--brand);
+      }
+      .result-student-info {
+        padding-left: 4px;
+      }
+      .result-student-info h3 {
+        font-family: "Merriweather", serif;
+        font-size: 1.2rem;
+        color: white;
+        margin-bottom: 4px;
+      }
+      .result-student-info p {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.82rem;
+        margin: 2px 0;
+      }
+      .result-actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .btn-ghost {
+        padding: 8px 15px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        color: rgba(255, 255, 255, 0.85);
+        font-family: "Source Sans 3", sans-serif;
+        font-size: 0.82rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .btn-ghost:hover {
+        background: rgba(255, 255, 255, 0.16);
+      }
+
+      /* STATS */
+      .mini {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .stat {
+        background: #f8fafc;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 14px;
+        text-align: center;
+      }
+      .stat .k {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+      .stat .v {
+        font-family: "Merriweather", serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--brand);
+      }
+      .stat.grade-stat .v {
+        font-size: 1.75rem;
+        color: var(--charcoal);
+      }
+
+      /* TABLE */
+      .table-wrap {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+      .table-title {
+        padding: 11px 18px;
+        background: var(--charcoal);
+        color: white;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .table-title::before {
+        content: "";
+        width: 3px;
+        height: 14px;
+        background: var(--brand);
+        border-radius: 2px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+      }
+      th {
+        padding: 11px 16px;
+        background: #f8fafc;
+        color: var(--muted);
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        text-align: left;
+        border-bottom: 1px solid var(--line);
+      }
+      td {
+        padding: 11px 16px;
+        font-size: 0.92rem;
+        border-bottom: 1px solid var(--line);
+        color: var(--text);
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      tbody tr:hover {
+        background: #f8fafc;
+      }
+      td.subject-name {
+        font-weight: 600;
+        color: var(--charcoal);
+      }
+      td.score {
+        font-weight: 700;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .score-badge {
+        display: inline-block;
+        padding: 3px 12px;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      .badge-a {
+        background: #dcfce7;
+        color: #15803d;
+      }
+      .badge-b {
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+      .badge-c {
+        background: #fef9c3;
+        color: #92400e;
+      }
+      .badge-d {
+        background: #ffedd5;
+        color: #c2410c;
+      }
+      .badge-e {
+        background: #fce7f3;
+        color: #9d174d;
+      }
+      .badge-f {
+        background: #fee2e2;
+        color: #b91c1c;
+      }
+
+      /* SPLIT */
+      .split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .note {
+        background: #f8fafc;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 16px 18px;
+      }
+      .note h4 {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--brand);
+        margin-bottom: 8px;
+      }
+      .note p {
+        color: var(--charcoal);
+        font-size: 0.88rem;
+        line-height: 1.6;
+      }
+
+      /* STAMP */
+      .stamp-box {
+        display: flex;
+        justify-content: flex-end;
+        padding-top: 16px;
+        border-top: 1px dashed var(--line);
+      }
+      .stamp-box img {
+        width: 130px;
+        opacity: 0.6;
+      }
+
+      .foot {
+        text-align: center;
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 0.8rem;
+        border-top: 1px solid var(--line);
+        padding-top: 14px;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 900px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 720px) {
+        .hero-top {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        .logo {
+          margin: 0 auto;
+        }
+        .hero-bottom {
+          justify-content: center;
+        }
+        .mini {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .split {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* PRINT */
       @media print {
-        body {
-          background: #fff;
-          color: #111827;
+        body,
+        .wrap {
+          background: white;
+        }
+        .topbar {
+          display: none;
         }
         .wrap {
           width: 100%;
           margin: 0;
         }
-        .hero,
-        .search-card {
+        .card.search-card {
           display: none !important;
+        }
+        .grid {
+          grid-template-columns: 1fr;
+          margin-top: 0;
         }
         .card {
           border: none;
           box-shadow: none;
-          background: #fff;
         }
         .result-shell {
           padding: 0;
         }
-        .result-top p,
-        .foot,
-        .note p,
-        .stat .k {
-          color: #374151 !important;
+        .result-actions {
+          display: none !important;
+        }
+        .result-header-bar {
+          background: var(--charcoal) !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .hero {
+          box-shadow: none;
+        }
+        .hero-top {
+          background: var(--brand-dark) !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
         }
         table {
-          background: #fff;
-          border: 1px solid #d1d5db;
+          border: 1px solid #e2e8f0;
         }
         th,
         td {
-          border-bottom: 1px solid #e5e7eb;
-          color: #111827;
+          border-bottom: 1px solid #e2e8f0;
         }
-        .print-actions {
-          display: none !important;
-        }
-      }
-
-      .stamp-box {
-        margin-top: 30px;
-        display: flex;
-        justify-content: center;
-      }
-
-      .stamp-box img {
-        width: 180px;
-        opacity: 0.7;
       }
     </style>
   </head>
   <body>
+    <!-- TOP BAR -->
+    <div class="topbar">
+      DE KINGS PERFECTION PRIVATE SCHOOL &nbsp;|&nbsp; Student Result Portal
+      &nbsp;|&nbsp; 2025/2026 Academic Session
+    </div>
+
     <div class="wrap">
+      <!-- HERO -->
       <section class="hero">
-        <div class="logo" id="logoBox">
-          <img src="kps-logo.png" alt="School Logo" />
+        <div class="hero-top">
+          <div class="logo" id="logoBox">
+            <img src="kps-logo.png" alt="School Logo" />
+          </div>
+          <div class="school-text">
+            <h1 id="schoolName">DE KINGS PERFECTION PRIVATE SCHOOL</h1>
+            <p class="motto" id="schoolMotto">Academic and Moral Excellence</p>
+            <p class="address">
+              13, Abosule Street, Agbado Crossing, Ogun State
+            </p>
+          </div>
         </div>
-        <div class="school">
-          <h1 id="schoolName">DE KINGS PERFECTION PRIVATE SCHOOL</h1>
-          <p id="schoolMotto">Academic and Moral Excellence</p>
-          <p>13, Abosule Street, Agbado Crossing, Ogun State</p>
+        <div class="hero-bottom">
           <div class="pillrow">
             <div class="pill" id="sessionPill">Session: 2025/2026</div>
             <div class="pill" id="termPill">Term: Second Term</div>
-            <div class="pill">Access: Login ID + PIN</div>
+            <div class="pill dark-pill">Login ID + PIN Required</div>
           </div>
+          <div class="portal-label">Student Result Portal</div>
         </div>
       </section>
 
+      <!-- GRID -->
       <section class="grid">
+        <!-- SEARCH CARD -->
         <div class="card search-card">
-          <div class="panel">
+          <div class="card-header">
             <h2>Check Result</h2>
-            <p class="sub">
-              Enter the student Login ID and PIN given by the school.
-            </p>
-
+            <p>Enter the Login ID and PIN provided by the school.</p>
+          </div>
+          <div class="panel">
             <div class="field">
               <label for="studentId">Login ID</label>
               <input
                 id="studentId"
-                placeholder="e.g. Enter Your Login ID"
+                placeholder="Enter your Login ID"
                 autocomplete="username" />
             </div>
-
             <div class="field">
               <label for="pin">PIN</label>
               <input
                 id="pin"
                 type="password"
-                placeholder="Enter PIN"
+                placeholder="Enter your PIN"
                 autocomplete="current-password" />
             </div>
-
             <div class="actions">
-              <button class="primary" id="checkBtn">Check Result</button>
-              <button class="secondary" id="clearBtn" type="button">
+              <button class="btn-primary" id="checkBtn">Check Result</button>
+              <button class="btn-secondary" id="clearBtn" type="button">
                 Clear
               </button>
             </div>
-
             <div class="status" id="status"></div>
-
             <div class="help">
-              Use the exact Login ID and PIN issued by the school.
+              Use the exact Login ID and PIN as issued by the school. Contact
+              the school office if you need assistance.
             </div>
           </div>
         </div>
 
+        <!-- RESULT CARD -->
         <div class="card">
           <div class="result-shell">
+            <!-- Empty -->
             <div id="emptyState">
-              <h2 style="margin-top: 0">Result Preview</h2>
-              <p class="sub">
-                No result loaded yet. Once the correct Login ID and PIN are
-                entered, the full result sheet appears here.
-              </p>
-            </div>
-
-            <div id="loadingState" class="hidden">
-              <div class="loading">
-                <span class="spinner"></span> Loading result...
+              <div class="empty-state">
+                <div class="empty-icon">📋</div>
+                <h2>Result Preview</h2>
+                <p>
+                  No result loaded yet. Enter your Login ID and PIN to view your
+                  full result sheet.
+                </p>
               </div>
             </div>
 
+            <!-- Loading -->
+            <div id="loadingState" class="hidden">
+              <div class="loading">
+                <span class="spinner"></span> Loading result, please wait…
+              </div>
+            </div>
+
+            <!-- Result -->
             <div id="resultState" class="hidden">
-              <div class="result-top">
-                <div>
+              <div class="result-header-bar">
+                <div class="result-student-info">
                   <h3 id="studentName">Student Name</h3>
                   <p id="studentMeta">Class • Term • Session</p>
-                  <p id="studentExtra">Login ID: -</p>
+                  <p id="studentExtra">Login ID: —</p>
                 </div>
-                <div class="print-actions">
-                  <button class="secondary" id="printBtn" type="button">
-                    Print / Save PDF
+                <div class="result-actions">
+                  <button class="btn-ghost" id="printBtn" type="button">
+                    🖨 Print / PDF
                   </button>
-                  <button class="secondary" id="newSearchBtn" type="button">
-                    New Search
+                  <button class="btn-ghost" id="newSearchBtn" type="button">
+                    ↩ New Search
                   </button>
                 </div>
               </div>
@@ -458,43 +816,45 @@
               <div class="mini">
                 <div class="stat">
                   <div class="k">Total</div>
-                  <div class="v" id="totalStat">-</div>
+                  <div class="v" id="totalStat">—</div>
                 </div>
                 <div class="stat">
                   <div class="k">Average</div>
-                  <div class="v" id="avgStat">-</div>
+                  <div class="v" id="avgStat">—</div>
                 </div>
-                <div class="stat">
+                <div class="stat grade-stat">
                   <div class="k">Grade</div>
-                  <div class="v" id="gradeStat">-</div>
+                  <div class="v" id="gradeStat">—</div>
                 </div>
                 <div class="stat">
                   <div class="k">Subjects</div>
-                  <div class="v" id="subjectCountStat">-</div>
+                  <div class="v" id="subjectCountStat">—</div>
                 </div>
               </div>
 
-              <h4 style="margin: 0 0 12px">Subject Scores</h4>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Subject</th>
-                    <th style="width: 120px">CA</th>
-                    <th style="width: 120px">Exam</th>
-                    <th style="width: 120px">Total</th>
-                  </tr>
-                </thead>
-                <tbody id="subjectsBody"></tbody>
-              </table>
+              <div class="table-wrap">
+                <div class="table-title">Subject Scores</div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Subject</th>
+                      <th style="width: 95px; text-align: center">CA</th>
+                      <th style="width: 95px; text-align: center">Exam</th>
+                      <th style="width: 110px; text-align: center">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody id="subjectsBody"></tbody>
+                </table>
+              </div>
 
               <div class="split">
                 <div class="note">
                   <h4>Teacher / School Remark</h4>
-                  <p id="remarkBox">-</p>
+                  <p id="remarkBox">—</p>
                 </div>
                 <div class="note">
                   <h4>Summary</h4>
-                  <p id="infoBox">-</p>
+                  <p id="infoBox">—</p>
                 </div>
               </div>
 
@@ -514,7 +874,7 @@
     <script>
       const CONFIG = {
         schoolName: "DE KINGS PERFECTION PRIVATE SCHOOL",
-        schoolMotto: "Academic and moral excellence",
+        schoolMotto: "Academic and Moral Excellence",
         sessionLabel: "2025/2026",
         termLabel: "Second Term",
         logoUrl: "kps-logo.png",
@@ -534,10 +894,9 @@
         $("sessionPill").textContent = `Session: ${CONFIG.sessionLabel}`;
         $("termPill").textContent = `Term: ${CONFIG.termLabel}`;
         $("portalFooter").textContent = CONFIG.schoolFooter;
-        if (CONFIG.logoUrl) {
+        if (CONFIG.logoUrl)
           $("logoBox").innerHTML =
             `<img src="${CONFIG.logoUrl}" alt="School Logo">`;
-        }
       }
 
       function setStatus(msg = "", type = "") {
@@ -547,9 +906,9 @@
       }
 
       function showState(which) {
-        $("emptyState").classList.add("hidden");
-        $("loadingState").classList.add("hidden");
-        $("resultState").classList.add("hidden");
+        ["emptyState", "loadingState", "resultState"].forEach((id) =>
+          $(id).classList.add("hidden"),
+        );
         $(which).classList.remove("hidden");
       }
 
@@ -561,31 +920,22 @@
           .trim();
       }
 
-      function firstNameOnly(fullName) {
-        const parts = clean(fullName).split(/\s+/).filter(Boolean);
-        return parts.length ? parts[parts.length - 1] : clean(fullName);
-      }
-
       function parseTSVLine(line) {
         const out = [];
-        let current = "";
-        let inQuotes = false;
+        let current = "",
+          inQuotes = false;
         for (let i = 0; i < line.length; i++) {
-          const ch = line[i];
-          const next = line[i + 1];
+          const ch = line[i],
+            next = line[i + 1];
           if (ch === '"') {
             if (inQuotes && next === '"') {
               current += '"';
               i++;
-            } else {
-              inQuotes = !inQuotes;
-            }
+            } else inQuotes = !inQuotes;
           } else if (ch === "\t" && !inQuotes) {
             out.push(current);
             current = "";
-          } else {
-            current += ch;
-          }
+          } else current += ch;
         }
         out.push(current);
         return out;
@@ -596,19 +946,16 @@
         const res = await fetch(CONFIG.dataUrl, { cache: "no-store" });
         if (!res.ok) throw new Error("Could not load result data.");
         const text = await res.text();
-
         const rows = text
           .split(/\r?\n/)
           .filter((r) => r.trim() !== "")
           .map(parseTSVLine);
         const headers = rows[0].map((h) => clean(h));
-
         state.rows = rows.slice(1).map((r) => {
           const obj = {};
           headers.forEach((h, i) => (obj[h] = r[i] || ""));
           return obj;
         });
-
         return state.rows;
       }
 
@@ -646,6 +993,16 @@
         }
       }
 
+      function badgeClass(total) {
+        const t = parseInt(total) || 0;
+        if (t >= 75) return "badge-a";
+        if (t >= 65) return "badge-b";
+        if (t >= 50) return "badge-c";
+        if (t >= 40) return "badge-d";
+        if (t >= 30) return "badge-e";
+        return "badge-f";
+      }
+
       function fillStudent(student) {
         let subjects = subjectsFromDisplay(student.subjects_display);
         if (!subjects.length)
@@ -655,76 +1012,76 @@
         $("studentMeta").textContent =
           `${clean(student.class)} • ${clean(student.term) || CONFIG.termLabel} • ${clean(student.session) || CONFIG.sessionLabel}`;
         $("studentExtra").textContent =
-          `Login ID: ${clean(student[CONFIG.idField]) || "-"}`;
+          `Login ID: ${clean(student[CONFIG.idField]) || "—"}`;
 
-        $("totalStat").textContent = clean(student.total) || "-";
-        $("avgStat").textContent = clean(student.average) || "-";
-        $("gradeStat").textContent = clean(student.grade) || "-";
+        $("totalStat").textContent = clean(student.total) || "—";
+        $("avgStat").textContent = clean(student.average)
+          ? clean(student.average) + "%"
+          : "—";
+        $("gradeStat").textContent = clean(student.grade) || "—";
         $("subjectCountStat").textContent = String(subjects.length || 0);
 
         const tbody = $("subjectsBody");
         tbody.innerHTML = "";
-
         if (!subjects.length) {
-          tbody.innerHTML = `<tr><td colspan="4">No subject result found.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:24px">No subject result found.</td></tr>`;
         } else {
           subjects.forEach((item) => {
             const tr = document.createElement("tr");
-            tr.innerHTML = `<td>${item.subject}</td><td class="score">${item.ca}</td><td class="score">${item.exam}</td><td class="score">${item.total}</td>`;
+            const total =
+              item.total !== "-"
+                ? `<span class="score-badge ${badgeClass(item.total)}">${item.total}</span>`
+                : "—";
+            tr.innerHTML = `<td class="subject-name">${item.subject}</td><td class="score">${item.ca}</td><td class="score">${item.exam}</td><td style="text-align:center">${total}</td>`;
             tbody.appendChild(tr);
           });
         }
 
         const grade = clean(student.grade).toUpperCase();
         const remarkMap = {
-          A: "Excellent performance.",
-          B: "Very good.",
-          C: "Good effort.",
-          D: "Fair.",
-          E: "Needs improvement.",
-          F: "Poor performance.",
+          A: "Excellent performance — keep it up!",
+          B: "Very good performance!",
+          C: "Good effort — aim higher next term.",
+          D: "Fair result — more effort is needed.",
+          E: "Needs significant improvement.",
+          F: "Poor performance — please see the class teacher.",
         };
-
         $("remarkBox").textContent =
-          clean(student.remark) || remarkMap[grade] || "-";
+          clean(student.remark) || remarkMap[grade] || "—";
         $("infoBox").textContent =
-          `Class: ${clean(student.class) || "-"} | Term: ${clean(student.term) || CONFIG.termLabel} | Session: ${clean(student.session) || CONFIG.sessionLabel}`;
-
+          `Class: ${clean(student.class) || "—"} | Term: ${clean(student.term) || CONFIG.termLabel} | Session: ${clean(student.session) || CONFIG.sessionLabel}`;
         showState("resultState");
       }
 
       function findStudent(rows, id, pin) {
-        const idNorm = clean(id).toLowerCase();
-        const pinNorm = clean(pin);
-        return rows.find((row) => {
-          const rowId = clean(row[CONFIG.idField]).toLowerCase();
-          const rowPin = clean(row[CONFIG.pinField]);
-          return rowId === idNorm && rowPin === pinNorm;
-        });
+        const idNorm = clean(id).toLowerCase(),
+          pinNorm = clean(pin);
+        return rows.find(
+          (row) =>
+            clean(row[CONFIG.idField]).toLowerCase() === idNorm &&
+            clean(row[CONFIG.pinField]) === pinNorm,
+        );
       }
 
       async function checkResult() {
-        const id = $("studentId").value;
-        const pin = $("pin").value;
-
+        const id = $("studentId").value,
+          pin = $("pin").value;
         if (!clean(id) || !clean(pin)) {
-          setStatus("Enter both Login ID and PIN.", "error");
+          setStatus("Please enter both Login ID and PIN.", "error");
           return;
         }
-
         setStatus("");
         showState("loadingState");
-
         try {
           const rows = await getRows();
           const student = findStudent(rows, id, pin);
           if (!student) {
             showState("emptyState");
-            setStatus("Invalid Login ID or PIN.", "error");
+            setStatus("Invalid Login ID or PIN. Please try again.", "error");
             return;
           }
           fillStudent(student);
-          setStatus("Result loaded successfully.", "ok");
+          setStatus("Result loaded successfully ✓", "ok");
         } catch (err) {
           showState("emptyState");
           setStatus(err.message || "An error occurred.", "error");
