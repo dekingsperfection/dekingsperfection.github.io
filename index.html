@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>DKPS Result Portal | 2025/2026</title>
+
+    <meta
+      name="description"
+      content="De Kings Perfection Private School 2025/2026 Student Result Portal" />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="top-header">
+      <div class="header-inner">
+        <div class="school-brand">
+          <img
+            src="assets/kps-logo.png"
+            alt="De Kings Perfection Private School Logo"
+            class="school-logo" />
+
+          <div class="school-name">
+            <h1>DE KINGS PERFECTION PRIVATE SCHOOL</h1>
+          </div>
+        </div>
+
+        <div class="portal-title">
+          <span>STUDENT</span>
+          <strong>RESULT PORTAL</strong>
+        </div>
+      </div>
+    </header>
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main>
+      <!-- HERO -->
+
+      <section class="hero">
+        <div class="hero-content">
+          <div class="hero-badge">2025 / 2026 ACADEMIC SESSION</div>
+
+          <h2>Check Your Academic Result</h2>
+
+          <p>
+            Enter your Student Login ID and PIN to securely access your third
+            term result.
+          </p>
+        </div>
+      </section>
+
+      <!-- =========================
+             LOGIN SECTION
+        ========================== -->
+
+      <section class="login-section" id="loginSection">
+        <div class="login-card">
+          <div class="login-heading">
+            <div class="login-icon">🔐</div>
+
+            <div>
+              <h2>Result Verification</h2>
+
+              <p>Enter the details provided by the school.</p>
+            </div>
+          </div>
+
+          <form id="resultForm">
+            <!-- LOGIN ID -->
+
+            <div class="form-group">
+              <label for="loginId"> Student Login ID </label>
+
+              <input
+                type="text"
+                id="loginId"
+                name="loginId"
+                placeholder="e.g. DKPSJSS1001"
+                autocomplete="username"
+                required />
+            </div>
+
+            <!-- PIN -->
+
+            <div class="form-group">
+              <label for="pin"> Result PIN </label>
+
+              <div class="pin-wrapper">
+                <input
+                  type="password"
+                  id="pin"
+                  name="pin"
+                  placeholder="Enter your 4-digit PIN"
+                  inputmode="numeric"
+                  maxlength="4"
+                  autocomplete="current-password"
+                  required />
+
+                <button
+                  type="button"
+                  id="togglePin"
+                  class="pin-toggle"
+                  aria-label="Show or hide PIN">
+                  Show
+                </button>
+              </div>
+            </div>
+
+            <!-- ERROR -->
+
+            <div id="loginMessage" class="login-message" role="alert"></div>
+
+            <!-- BUTTON -->
+
+            <button type="submit" id="checkResultButton" class="check-button">
+              <span id="buttonText"> Check Result </span>
+
+              <span id="buttonSpinner" class="spinner"></span>
+            </button>
+          </form>
+
+          <div class="login-note">
+            <span>ⓘ</span>
+
+            <p>
+              Your Login ID and PIN are required to view your result. Keep them
+              confidential.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================
+             RESULT SECTION
+        ========================== -->
+
+      <section id="resultSection" class="result-section">
+        <!-- JavaScript inserts the result here -->
+      </section>
+    </main>
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>
+          <strong> De Kings Perfection Private School </strong>
+
+          <p>Academic and Moral Excellence</p>
+        </div>
+
+        <div class="footer-session">2025/2026 · Third Term</div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
